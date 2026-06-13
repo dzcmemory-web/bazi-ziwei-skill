@@ -96,7 +96,11 @@ npx tsx render.ts --chart=chart.json --analysis=analysis.json \
   --template=../templates/report-zonghe-poster.html --output=report.html --currentYear=2026
 ```
 
-仓库自带一份合成示例：`examples/sample-chart.json` / `examples/sample-chart.txt`（2000-01-01 男）。
+仓库自带一份合成示例（2000-01-01 男，非真人）：
+- `examples/sample-chart.json` — 算法层排盘输出
+- `examples/sample-chart.txt` — 文墨天机风文本盘
+- `examples/sample-analysis.json` — 综合印证分析（示例）
+- `examples/sample-report.html` — **综合印证海报成品，下载后用浏览器打开即可预览效果**
 
 ---
 
