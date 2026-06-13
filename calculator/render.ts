@@ -44,7 +44,6 @@ function chartToFlat(chart: any, currentYear?: number): Record<string, any> {
     out['meta.lunar_date'] = '-';
   }
   out['meta.gender_full'] = bi.gender === 'male' ? '男（' + (zw.yinYang || '') + '）' : '女（' + (zw.yinYang || '') + '）';
-  out['meta.birth_place'] = bi.birthPlace || '北京（东经 116.40°）';
   out['meta.age_virtual'] = virtualAge.toString();
   out['meta.current_year'] = currentYear.toString();
   const now = new Date();
