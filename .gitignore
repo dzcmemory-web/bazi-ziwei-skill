@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+calculator/node_modules/
+
+# build / runtime artifacts
+*.log
+.DS_Store
+Thumbs.db
+
+# 排盘运行产物（用户生成的命盘 / 分析 / 报告，含个人生辰，勿入库）
+*.tmp
+chart.json
+chart.txt
+analysis.json
+smoke.json
+report.html
+*-report.html
+*-zonghe.html
+
+# editor
+.vscode/
+.idea/
+*.swp

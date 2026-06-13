@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>{{meta.archetype_name}} · 综合印证报告</title>
+<style>
+  :root {
+    --paper: #f5f1e8;
+    --paper-deep: #ebe5d5;
+    --paper-card: #faf6ec;
+    --ink: #2b2825;
+    --ink-soft: #6b6660;
+    --ink-faint: #a8a298;
+    --vermillion: #c1432f;
+    --vermillion-deep: #8e2f20;
+    --azure: #2e6da4;
+    --jade: #4a7c4e;
+    --jade-soft: #6f9971;
+    --obsidian: #1a1a1a;
+    --line: #8b8378;
+    --line-soft: #c4bdb0;
+    --line-faint: #e0d9c8;
+    --warn: #c97c3a;
+    --warn-bg: #faf1e2;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Han Serif SC", "Noto Serif SC", "STSong", serif;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  body {
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(180,160,130,0.06), transparent 50%),
+      radial-gradient(circle at 85% 75%, rgba(180,160,130,0.05), transparent 50%);
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .num { font-family: "JetBrains Mono", "IBM Plex Mono", "Courier New", monospace; }
+
+  .report {
+    max-width: 1080px;
+    margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    padding: 28px;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    align-items: start;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 20px;
+  }
+  .seal {
+    width: 44px; height: 44px;
+    border: 1.5px solid var(--vermillion);
+    color: var(--vermillion);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-size: 11px; letter-spacing: 2px; line-height: 1.1;
+    transform: rotate(-3deg);
+  }
+  .title-block h1 {
+    font-size: 36px; margin: 0 0 6px;
+    letter-spacing: 4px; font-weight: normal;
+  }
+  .title-block .subtitle {
+    font-size: 13px; color: var(--ink-soft);
+    letter-spacing: 1px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 11px; color: var(--ink-soft);
+  }
+  .header-right .gen-time { margin-bottom: 6px; }
+  .header-right .meta-row {
+    display: flex; gap: 12px; justify-content: flex-end;
+    margin-top: 4px; font-size: 12px;
+  }
+  .header-right .meta-row span { color: var(--ink); }
+  .header-right .meta-row b { color: var(--vermillion); font-weight: normal; }
+  .badge-grade {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border: 1px solid var(--jade);
+    color: var(--jade); border-radius: 3px;
+    font-size: 12px; margin-top: 6px;
+  }
+
+  /* ============ TOP GRID ============ */
+  .top-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  /* core-data 独立一行, 全宽 5 卡 */
+  .core-data-row {
+    margin-bottom: 20px;
+  }
+  .info-card {
+    background: var(--paper-card);
+    border: 1px solid var(--line-soft);
+    padding: 14px 16px;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .info-card .row { display: flex; gap: 8px; }
+  .info-card .icon { color: var(--vermillion); width: 16px; }
+  .info-card .key { color: var(--ink-soft); width: 44px; }
+  .info-card .val { color: var(--ink); }
+
+  /* core data */
+  .section-title {
+    font-size: 14px; font-weight: bold;
+    margin: 0 0 10px; color: var(--ink);
+    letter-spacing: 1px;
+  }
+  .core-data {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .data-card {
+    background: var(--paper-card);
+    border: 1px solid var(--line-soft);
+    padding: 10px 12px;
+    text-align: center;
+    position: relative;
+  }
+  .data-card .info-i {
+    position: absolute; top: 6px; right: 8px;
+    color: var(--ink-faint); font-size: 10px;
+  }
+  .data-card .label { font-size: 11px; color: var(--ink-soft); margin-bottom: 4px; }
+  .data-card .value { font-size: 22px; color: var(--ink); margin: 4px 0; }
+  .data-card .value-tiaohou { display: flex; gap: 6px; justify-content: center; }
+  .data-card .value-tiaohou span {
+    display: inline-block; padding: 2px 8px;
+    border: 1px solid var(--jade); color: var(--jade);
+    font-size: 16px;
+  }
+  .data-card .conf {
+    font-size: 10px; color: var(--ink-faint); margin-top: 2px;
+  }
+  .data-card .score {
+    font-family: "JetBrains Mono", monospace;
+    color: var(--vermillion); font-size: 14px;
+  }
+  .slider {
+    height: 4px; background: linear-gradient(to right, var(--azure), var(--paper-deep), var(--vermillion));
+    margin: 6px 4px 2px; position: relative; border-radius: 2px;
+  }
+  .slider-mark {
+    position: absolute; top: -2px;
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--ink);
+  }
+  .slider-labels {
+    display: flex; justify-content: space-between;
+    font-size: 9px; color: var(--ink-faint);
+    margin-top: 1px;
+  }
+  .yueling { font-size: 12px; line-height: 1.7; color: var(--ink); }
+  .yueling .tag {
+    display: inline-block; margin: 0 2px;
+    padding: 0 4px; font-size: 11px;
+  }
+  .wx-bars {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 4px; align-items: end;
+    height: 50px; padding: 0 4px;
+  }
+  .wx-bar {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: end;
+    height: 100%;
+  }
+  .wx-bar .col {
+    width: 14px; border-radius: 2px 2px 0 0;
+  }
+  .wx-bar .name { font-size: 10px; color: var(--ink-soft); margin-top: 2px; }
+  .wx-bar .num-val { font-size: 9px; color: var(--ink-faint); }
+
+  /* right block */
+  .right-block { display: flex; flex-direction: column; gap: 14px; }
+  .axes-block {
+    background: var(--paper-card); border: 1px solid var(--line-soft);
+    padding: 12px 14px;
+  }
+  .axes-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .axis-box {
+    padding: 10px;
+    background: rgba(255,255,255,0.4);
+    border: 1px dashed var(--line-soft);
+  }
+  .axis-box .label { font-size: 11px; color: var(--vermillion); margin-bottom: 4px; }
+  .axis-box .text { font-size: 12px; color: var(--ink); line-height: 1.7; }
+  .strengths-block {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .strength-side, .weakness-side {
+    background: var(--paper-card); border: 1px solid var(--line-soft);
+    padding: 10px 12px;
+  }
+  .strength-side h4 { color: var(--jade); }
+  .weakness-side h4 { color: var(--vermillion); }
+  .strength-side h4, .weakness-side h4 {
+    margin: 0 0 8px; font-size: 12px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .item {
+    display: grid; grid-template-columns: 16px 1fr;
+    gap: 6px; margin-bottom: 6px;
+    font-size: 11px;
+  }
+  .item .star { color: var(--jade); }
+  .item .x { color: var(--vermillion); }
+  .item .t { font-weight: bold; color: var(--ink); display: block; }
+  .item .d { color: var(--ink-soft); font-size: 10px; line-height: 1.5; }
+
+  /* ============ ZIWEI + BAZI GRID ============ */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .ziwei-pan {
+    background: var(--paper); border: 1px solid var(--line);
+  }
+  .ziwei-pan h3, .bazi-pan h3 {
+    margin: 0; padding: 8px 12px;
+    font-size: 13px; background: var(--paper-deep);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .ziwei-pan h3 small { font-size: 10px; color: var(--ink-soft); margin-left: 8px; }
+  .ziwei-pan h3 .sh-禄 { color: var(--vermillion); }
+  .ziwei-pan h3 .sh-权 { color: var(--azure); }
+  .ziwei-pan h3 .sh-科 { color: var(--jade); }
+  .ziwei-pan h3 .sh-忌 { color: var(--obsidian); }
+  .ziwei-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    height: 540px;
+    background: var(--line-soft);
+    gap: 1px;
+  }
+  .palace {
+    background: var(--paper);
+    padding: 4px 6px;
+    font-size: 10px;
+    position: relative;
+    display: flex; flex-direction: column;
+  }
+  .palace.ming { box-shadow: inset 0 0 0 2px var(--vermillion); }
+  .palace.shen::after {
+    content: "身"; position: absolute; top: 4px; right: 4px;
+    color: var(--vermillion); border: 1px solid var(--vermillion);
+    width: 14px; height: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+  }
+  .palace.laiyin::before {
+    content: "来因"; position: absolute; bottom: 4px; right: 4px;
+    color: var(--ink-faint); font-size: 8px;
+  }
+  .palace .p-head {
+    display: flex; justify-content: space-between;
+    border-bottom: 1px dashed var(--line-soft);
+    padding-bottom: 2px; margin-bottom: 3px;
+  }
+  .palace .p-dizhi { color: var(--ink-soft); }
+  .palace .p-gong { font-weight: bold; }
+  .palace .p-ganzhi { font-size: 9px; color: var(--ink-faint); }
+  .palace .main-star {
+    font-size: 12px; font-weight: bold; line-height: 1.4;
+  }
+  .palace .main-star .state {
+    font-size: 9px; color: var(--ink-soft); margin-left: 1px;
+  }
+  .palace .aux-star { color: var(--ink-soft); font-size: 10px; line-height: 1.4; }
+  .palace .small-star { color: var(--ink-faint); font-size: 9px; line-height: 1.3; }
+  .palace .daxian {
+    margin-top: auto; padding-top: 4px;
+    border-top: 1px dashed var(--line-soft);
+    font-size: 9px; color: var(--ink-soft);
+  }
+  .palace.current-daxian .daxian { color: var(--vermillion); font-weight: bold; }
+  .sihua-禄 { color: var(--vermillion); }
+  .sihua-权 { color: var(--azure); }
+  .sihua-科 { color: var(--jade); }
+  .sihua-忌 { color: var(--obsidian); text-decoration: underline; text-decoration-thickness: 1.5px; }
+  .sihua-tag {
+    display: inline-block; padding: 0 3px;
+    border: 1px solid currentColor; border-radius: 2px;
+    font-size: 8px; margin-left: 1px;
+  }
+
+  /* center palace */
+  .center-palace {
+    grid-column: 2 / 4; grid-row: 2 / 4;
+    padding: 14px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: var(--paper);
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+  .center-palace h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: 4px; }
+  .center-palace .info-line { font-size: 11px; color: var(--ink-soft); margin: 2px 0; }
+  .center-palace .pillars {
+    display: flex; gap: 8px; margin-top: 12px;
+  }
+  .center-palace .pillar {
+    background: var(--paper-deep);
+    border: 1px solid var(--line-soft);
+    padding: 4px 8px;
+    text-align: center;
+  }
+  .center-palace .pillar .pname { font-size: 9px; color: var(--ink-faint); letter-spacing: 1px; }
+  .center-palace .pillar .pgan { font-size: 14px; font-weight: bold; }
+  .center-palace .pillar .pzhi { font-size: 13px; color: var(--ink-soft); }
+
+  /* ============ BAZI PAN ============ */
+  .bazi-pan { background: var(--paper); border: 1px solid var(--line); }
+  .bazi-body { padding: 12px; }
+  .bazi-pillars {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--line-soft);
+  }
+  .b-col {
+    border-right: 1px solid var(--line-faint);
+    padding: 8px 4px; text-align: center;
+  }
+  .b-col:last-child { border-right: none; }
+  .b-head { font-size: 10px; color: var(--ink-soft); }
+  .b-shishen { font-size: 11px; color: var(--vermillion); margin: 2px 0; }
+  .b-shishen.dayMaster { color: var(--ink); border: 1px solid var(--ink); padding: 0 4px; display: inline-block; }
+  .b-gan { font-size: 30px; font-weight: bold; line-height: 1.1; margin: 2px 0; }
+  .b-zhi { font-size: 24px; line-height: 1.1; margin: 2px 0; }
+  .b-canggan {
+    font-size: 9px; color: var(--ink-soft);
+    line-height: 1.5; min-height: 50px;
+    border-top: 1px dashed var(--line-soft); margin-top: 4px;
+    padding-top: 4px;
+  }
+  .b-extra {
+    border-top: 1px dashed var(--line-soft);
+    margin-top: 4px; padding-top: 4px;
+  }
+  .b-extra-row {
+    display: flex; justify-content: space-between;
+    font-size: 9px; color: var(--ink-soft);
+    margin: 1px 0;
+  }
+  .b-extra-row .ek { color: var(--ink-faint); }
+
+  .dayun-strip, .liunian-strip {
+    margin-top: 10px;
+    border: 1px solid var(--line-soft);
+  }
+  .strip-head {
+    background: var(--paper-deep);
+    padding: 4px 10px;
+    font-size: 11px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .strip-head .small { font-size: 9px; color: var(--ink-soft); margin-left: 6px; }
+  .strip-row { display: grid; grid-template-columns: repeat(10, 1fr); }
+  .strip-cell {
+    border-right: 1px solid var(--line-faint);
+    padding: 4px 2px; text-align: center;
+    font-size: 9px;
+  }
+  .strip-cell:last-child { border-right: none; }
+  .strip-cell.current { background: rgba(193,67,47,0.08); }
+  .strip-cell.current .ages { color: var(--vermillion); font-weight: bold; }
+  .strip-cell .gz { font-size: 11px; font-weight: bold; color: var(--ink); }
+  .strip-cell .ages { color: var(--ink-soft); }
+  .strip-cell .ss { font-size: 8px; color: var(--ink-faint); margin-top: 1px; }
+  .strip-cell.current.dayun::after {
+    content: "当前"; display: block;
+    color: var(--vermillion); font-size: 9px; margin-top: 1px;
+  }
+
+  /* ============ NUMBERED SECTIONS ============ */
+  .section {
+    background: var(--paper); border: 1px solid var(--line-soft);
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+  .section h2 {
+    margin: 0 0 10px; font-size: 14px;
+    letter-spacing: 1px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section h2 .num-box {
+    background: var(--ink); color: var(--paper);
+    padding: 2px 6px; border-radius: 2px;
+    font-size: 11px; font-family: "JetBrains Mono", monospace;
+  }
+  .row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  /* 01 main axis conclusion */
+  .axis-conclusion {
+    background: var(--paper-card); border-left: 3px solid var(--vermillion);
+    padding: 10px 14px; font-size: 12px; line-height: 1.9;
+    color: var(--ink);
+  }
+  .axis-conclusion .wc { font-size: 10px; color: var(--ink-faint); text-align: right; margin-top: 6px; }
+
+  /* 02 stage timeline */
+  .stage-legend { display: flex; gap: 12px; font-size: 11px; margin-bottom: 8px; }
+  .stage-legend .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+  .stage-legend .dot.up { background: var(--jade); }
+  .stage-legend .dot.flat { background: var(--azure); }
+  .stage-legend .dot.down { background: var(--vermillion); }
+  .stage-grid {
+    display: grid; grid-template-columns: 80px repeat(7, 1fr);
+    border: 1px solid var(--line-soft); font-size: 10px;
+  }
+  .stage-grid > div { padding: 6px 4px; border-right: 1px solid var(--line-faint); text-align: center; }
+  .stage-grid > div:last-child { border-right: none; }
+  .stage-grid .stage-head { background: var(--paper-deep); font-weight: bold; }
+  .stage-grid .sg-label { background: var(--paper-deep); font-size: 11px; text-align: left; padding-left: 8px; }
+  .stage-grid .current { background: rgba(193,67,47,0.08); color: var(--vermillion); font-weight: bold; }
+  .stage-conclusion {
+    background: var(--paper-card); padding: 8px 12px;
+    margin-top: 8px; font-size: 11px; line-height: 1.8;
+    border-left: 2px solid var(--azure);
+  }
+
+  /* 03 cross check */
+  .cross-grid {
+    display: grid; grid-template-columns: 80px repeat(6, 1fr);
+    border: 1px solid var(--line-soft); font-size: 10px;
+  }
+  .cross-grid > div { padding: 6px 5px; border-right: 1px solid var(--line-faint); border-bottom: 1px solid var(--line-faint); }
+  .cross-grid > div:last-child { border-right: none; }
+  .cross-grid .ch { background: var(--paper-deep); text-align: center; font-weight: bold; font-size: 11px; }
+  .cross-grid .lh { background: var(--paper-deep); font-size: 11px; font-weight: bold; }
+  .verdict-tag { padding: 2px 6px; border-radius: 2px; font-size: 10px; }
+  .verdict-yes { background: rgba(74,124,78,0.15); color: var(--jade); }
+  .verdict-partial { background: rgba(201,124,58,0.15); color: var(--warn); }
+  .verdict-no { background: rgba(193,67,47,0.15); color: var(--vermillion); }
+
+  /* 04 conflicts */
+  .conflict-grid {
+    display: grid; grid-template-columns: 100px 1fr 1fr 60px 1fr;
+    border: 1px solid var(--line-soft); font-size: 10px;
+  }
+  .conflict-grid > div { padding: 6px 8px; border-right: 1px solid var(--line-faint); border-bottom: 1px solid var(--line-faint); }
+  .conflict-grid > div:last-child { border-right: none; }
+  .conflict-grid .ch { background: var(--paper-deep); font-weight: bold; text-align: center; }
+  .impact-dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 4px; vertical-align: middle;
+  }
+  .impact-low { background: var(--jade); }
+  .impact-mid { background: var(--warn); }
+  .impact-high { background: var(--vermillion); }
+
+  /* 05 final conclusion */
+  .final-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .final-block {
+    background: var(--paper-card); border: 1px solid var(--line-soft);
+    padding: 10px 12px;
+  }
+  .final-block h4 { margin: 0 0 6px; font-size: 11px; color: var(--ink-soft); }
+  .final-block .big {
+    font-size: 13px; line-height: 1.7; color: var(--vermillion);
+    font-weight: bold;
+  }
+  .nodes-list { list-style: none; padding: 0; margin: 0; font-size: 10px; }
+  .nodes-list li {
+    position: relative; padding-left: 14px;
+    margin-bottom: 6px; line-height: 1.5;
+  }
+  .nodes-list li::before {
+    content: "●"; position: absolute; left: 0; top: 0;
+    color: var(--vermillion); font-size: 10px;
+  }
+  .risk-item, .leverage-item, .advice-item {
+    font-size: 10px; line-height: 1.6;
+    padding: 6px 0; border-bottom: 1px dashed var(--line-faint);
+  }
+  .risk-item:last-child, .leverage-item:last-child, .advice-item:last-child { border-bottom: none; }
+  .risk-item .head { color: var(--vermillion); font-weight: bold; }
+  .leverage-item .head { color: var(--jade); font-weight: bold; }
+  .advice-item .num {
+    display: inline-block; width: 18px; height: 18px;
+    background: var(--ink); color: var(--paper);
+    border-radius: 50%; text-align: center; line-height: 18px;
+    font-size: 10px; margin-right: 4px;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  /* 06 confidence */
+  .confidence-row {
+    display: grid; grid-template-columns: repeat(4, 1fr) 1.5fr;
+    gap: 10px;
+  }
+  .conf-card {
+    text-align: center; padding: 8px;
+    background: var(--paper-card); border: 1px solid var(--line-soft);
+  }
+  .conf-card .label { font-size: 11px; color: var(--ink-soft); }
+  .conf-card .level { font-size: 14px; font-weight: bold; margin: 4px 0; }
+  .conf-card .score { font-family: "JetBrains Mono", monospace; color: var(--vermillion); font-size: 12px; }
+  .conf-note {
+    background: var(--paper-card); padding: 8px 12px;
+    border: 1px solid var(--line-soft);
+    font-size: 10px; line-height: 1.7; color: var(--ink-soft);
+  }
+
+  /* footer */
+  .footer-disclaim {
+    text-align: center; font-size: 11px; color: var(--ink-faint);
+    margin-top: 18px; padding: 14px 0;
+    border-top: 1px solid var(--line-soft);
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+  }
+  .footer-disclaim .footer-seal {
+    color: var(--vermillion); border: 1px solid var(--vermillion);
+    padding: 4px 8px; font-size: 11px; letter-spacing: 2px;
+    transform: rotate(-2deg);
+  }
+</style>
+</head>
+<body>
+<div class="report">
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="seal">命理<br>印证</div>
+    <div class="title-block">
+      <div style="font-size:10px;color:var(--ink-soft);letter-spacing:2px;margin-bottom:4px">综合印证报告</div>
+      <h1>{{meta.archetype_name}}</h1>
+      <div class="subtitle">{{meta.axis_oneliner}}</div>
+    </div>
+    <div class="header-right">
+      <div class="gen-time">生成时间：<span class="num">{{meta.gen_time}}</span></div>
+      <div>综合印证评级</div>
+      <div class="badge-grade">✓ {{ziwei.consistency}}</div>
+      <div class="meta-row">
+        <span>命主星：<b>{{ziwei.ming_zhu}}</b></span>
+        <span>身主星：<b>{{ziwei.shen_zhu}}</b></span>
+      </div>
+      <div class="meta-row">
+        <span>子年斗君：<b>{{ziwei.zi_dou_jun}}</b></span>
+        <span>{{ziwei.wuxing_ju}}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ TOP GRID: info | core | right ============ -->
+  <div class="top-grid">
+
+    <!-- left info card -->
+    <div class="info-card">
+      <div class="row"><span class="icon">☉</span><span class="key">阳历</span><span class="val num">{{meta.solar_date}}（真太阳时）</span></div>
+      <div class="row"><span class="icon">☽</span><span class="key">农历</span><span class="val">{{meta.lunar_date}}</span></div>
+      <div class="row"><span class="icon">⚧</span><span class="key">性别</span><span class="val">{{meta.gender_full}}</span></div>
+      <div class="row"><span class="icon">⊕</span><span class="key">出生地</span><span class="val">{{meta.birth_place}}</span></div>
+      <div class="row"><span class="icon">⌛</span><span class="key">年龄</span><span class="val">虚岁 <span class="num">{{meta.age_virtual}}</span>（截至 <span class="num">{{meta.current_year}}</span>）</span></div>
+    </div>
+
+    <!-- right block: axes + strengths -->
+    <div class="right-block">
+      <div class="axes-block">
+        <div class="section-title">两盘主轴印证</div>
+        <div class="axes-row">
+          <div class="axis-box">
+            <div class="label">八字主轴</div>
+            <div class="text">{{axes.bazi_main}}</div>
+          </div>
+          <div class="axis-box">
+            <div class="label">紫微主轴</div>
+            <div class="text">{{axes.ziwei_main}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="strengths-block">
+        <div class="strength-side">
+          <h4>★ 三大优势</h4>
+          <div class="item"><span class="star">★</span><div><span class="t">{{strengths.0.title}}</span><span class="d">{{strengths.0.desc}}</span></div></div>
+          <div class="item"><span class="star">★</span><div><span class="t">{{strengths.1.title}}</span><span class="d">{{strengths.1.desc}}</span></div></div>
+          <div class="item"><span class="star">★</span><div><span class="t">{{strengths.2.title}}</span><span class="d">{{strengths.2.desc}}</span></div></div>
+        </div>
+        <div class="weakness-side">
+          <h4>⊗ 三大隐忧</h4>
+          <div class="item"><span class="x">⊗</span><div><span class="t">{{weaknesses.0.title}}</span><span class="d">{{weaknesses.0.desc}}</span></div></div>
+          <div class="item"><span class="x">⊗</span><div><span class="t">{{weaknesses.1.title}}</span><span class="d">{{weaknesses.1.desc}}</span></div></div>
+          <div class="item"><span class="x">⊗</span><div><span class="t">{{weaknesses.2.title}}</span><span class="d">{{weaknesses.2.desc}}</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CORE DATA (full-width row) ============ -->
+  <div class="core-data-row">
+    <div class="section-title">命盘核心数据</div>
+    <div class="core-data">
+      <div class="data-card">
+        <div class="info-i">ⓘ</div>
+        <div class="label">格局</div>
+        <div class="value">{{core.geju}}</div>
+        <div class="conf">置信度：{{core.geju_confidence}}</div>
+      </div>
+      <div class="data-card">
+        <div class="info-i">ⓘ</div>
+        <div class="label">旺衰</div>
+        <div class="value">{{core.wangshuai_verdict}}</div>
+        <div class="score num">{{core.wangshuai_score}}</div>
+        <div class="slider">
+          <div class="slider-mark" style="left:{{core.wangshuai_pos_pct}}%"></div>
+        </div>
+        <div class="slider-labels"><span>弱</span><span>中</span><span>旺</span></div>
+      </div>
+      <div class="data-card">
+        <div class="info-i">ⓘ</div>
+        <div class="label">调候用神</div>
+        <div class="value-tiaohou" style="margin-top:6px"><span>{{core.tiaohou.0}}</span><span>{{core.tiaohou.1}}</span></div>
+        <div class="conf" style="margin-top:8px">置信度：{{core.tiaohou_confidence}}</div>
+      </div>
+      <div class="data-card">
+        <div class="label">月令旺相</div>
+        <div class="yueling" style="margin-top:8px">
+          <span class="tag">水{{core.yueling.水}}</span>·<span class="tag">木{{core.yueling.木}}</span>·<span class="tag">金{{core.yueling.金}}</span>·<span class="tag">土{{core.yueling.土}}</span>·<span class="tag">火{{core.yueling.火}}</span>
+        </div>
+      </div>
+      <div class="data-card">
+        <div class="label">五行统计（含藏干）</div>
+        <div class="wx-bars">
+          <div class="wx-bar"><div class="col" style="height:{{core.wuxing_pct.木}}%;background:var(--jade)"></div><div class="name">木</div><div class="num-val num">{{core.wuxing.木}}</div></div>
+          <div class="wx-bar"><div class="col" style="height:{{core.wuxing_pct.火}}%;background:var(--vermillion)"></div><div class="name">火</div><div class="num-val num">{{core.wuxing.火}}</div></div>
+          <div class="wx-bar"><div class="col" style="height:{{core.wuxing_pct.土}}%;background:#a07c4a"></div><div class="name">土</div><div class="num-val num">{{core.wuxing.土}}</div></div>
+          <div class="wx-bar"><div class="col" style="height:{{core.wuxing_pct.金}}%;background:#9c9382"></div><div class="name">金</div><div class="num-val num">{{core.wuxing.金}}</div></div>
+          <div class="wx-bar"><div class="col" style="height:{{core.wuxing_pct.水}}%;background:var(--azure)"></div><div class="name">水</div><div class="num-val num">{{core.wuxing.水}}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CHARTS: ZIWEI 12-PALACE + BAZI ============ -->
+  <div class="charts-grid">
+    <!-- ZIWEI -->
+    <div class="ziwei-pan">
+      <h3>紫微斗数 · 十二宫盘 <small>生年四化：<span class="sh-禄">禄朱砂</span> / <span class="sh-权">权青蓝</span> / <span class="sh-科">科翠绿</span> / <span class="sh-忌">忌玄黑</span></small></h3>
+      <div class="ziwei-grid">
+        <!-- 巳 兄弟 -->
+        <div class="palace" data-zhi="巳">
+          <div class="p-head"><span class="p-dizhi">巳</span><span class="p-gong">{{gongs.巳.name}}</span><span class="p-ganzhi">{{gongs.巳.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.巳.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.巳.auxStars}}</div>
+          <div class="small-star">{{gongs.巳.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.巳.daxian_range}}</div>
+        </div>
+        <!-- 午 命宫 -->
+        <div class="palace ming" data-zhi="午">
+          <div class="p-head"><span class="p-dizhi">午</span><span class="p-gong" style="color:var(--vermillion)">{{gongs.午.name}}</span><span class="p-ganzhi">{{gongs.午.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.午.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.午.auxStars}}</div>
+          <div class="small-star">{{gongs.午.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.午.daxian_range}}</div>
+        </div>
+        <!-- 未 父母 -->
+        <div class="palace" data-zhi="未">
+          <div class="p-head"><span class="p-dizhi">未</span><span class="p-gong">{{gongs.未.name}}</span><span class="p-ganzhi">{{gongs.未.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.未.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.未.auxStars}}</div>
+          <div class="small-star">{{gongs.未.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.未.daxian_range}}</div>
+        </div>
+        <!-- 申 福德 -->
+        <div class="palace" data-zhi="申">
+          <div class="p-head"><span class="p-dizhi">申</span><span class="p-gong">{{gongs.申.name}}</span><span class="p-ganzhi">{{gongs.申.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.申.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.申.auxStars}}</div>
+          <div class="small-star">{{gongs.申.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.申.daxian_range}}</div>
+        </div>
+        <!-- 辰 夫妻(身) -->
+        <div class="palace shen" data-zhi="辰">
+          <div class="p-head"><span class="p-dizhi">辰</span><span class="p-gong">{{gongs.辰.name}}</span><span class="p-ganzhi">{{gongs.辰.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.辰.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.辰.auxStars}}</div>
+          <div class="small-star">{{gongs.辰.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.辰.daxian_range}}</div>
+        </div>
+        <!-- center palace 2x2 -->
+        <div class="center-palace">
+          <h4>中宫 · 命盘信息</h4>
+          <div class="info-line">{{meta.yinyang}} {{ziwei.wuxing_ju}}</div>
+          <div class="info-line">命主：{{ziwei.ming_zhu}}　身主：{{ziwei.shen_zhu}}</div>
+          <div class="pillars">
+            <div class="pillar"><div class="pname">年</div><div class="pgan">{{bazi.year.gan}}</div><div class="pzhi">{{bazi.year.zhi}}</div></div>
+            <div class="pillar"><div class="pname">月</div><div class="pgan">{{bazi.month.gan}}</div><div class="pzhi">{{bazi.month.zhi}}</div></div>
+            <div class="pillar"><div class="pname">日</div><div class="pgan">{{bazi.day.gan}}</div><div class="pzhi">{{bazi.day.zhi}}</div></div>
+            <div class="pillar"><div class="pname">时</div><div class="pgan">{{bazi.hour.gan}}</div><div class="pzhi">{{bazi.hour.zhi}}</div></div>
+          </div>
+        </div>
+        <!-- 酉 田宅 -->
+        <div class="palace" data-zhi="酉">
+          <div class="p-head"><span class="p-dizhi">酉</span><span class="p-gong">{{gongs.酉.name}}</span><span class="p-ganzhi">{{gongs.酉.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.酉.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.酉.auxStars}}</div>
+          <div class="small-star">{{gongs.酉.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.酉.daxian_range}}</div>
+        </div>
+        <!-- 卯 子女(来因) -->
+        <div class="palace laiyin" data-zhi="卯">
+          <div class="p-head"><span class="p-dizhi">卯</span><span class="p-gong">{{gongs.卯.name}}</span><span class="p-ganzhi">{{gongs.卯.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.卯.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.卯.auxStars}}</div>
+          <div class="small-star">{{gongs.卯.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.卯.daxian_range}}</div>
+        </div>
+        <!-- 戌 官禄 -->
+        <div class="palace" data-zhi="戌">
+          <div class="p-head"><span class="p-dizhi">戌</span><span class="p-gong">{{gongs.戌.name}}</span><span class="p-ganzhi">{{gongs.戌.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.戌.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.戌.auxStars}}</div>
+          <div class="small-star">{{gongs.戌.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.戌.daxian_range}}</div>
+        </div>
+        <!-- 寅 财帛 -->
+        <div class="palace" data-zhi="寅">
+          <div class="p-head"><span class="p-dizhi">寅</span><span class="p-gong">{{gongs.寅.name}}</span><span class="p-ganzhi">{{gongs.寅.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.寅.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.寅.auxStars}}</div>
+          <div class="small-star">{{gongs.寅.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.寅.daxian_range}}</div>
+        </div>
+        <!-- 丑 疾厄 -->
+        <div class="palace" data-zhi="丑">
+          <div class="p-head"><span class="p-dizhi">丑</span><span class="p-gong">{{gongs.丑.name}}</span><span class="p-ganzhi">{{gongs.丑.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.丑.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.丑.auxStars}}</div>
+          <div class="small-star">{{gongs.丑.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.丑.daxian_range}}</div>
+        </div>
+        <!-- 子 迁移 -->
+        <div class="palace" data-zhi="子">
+          <div class="p-head"><span class="p-dizhi">子</span><span class="p-gong">{{gongs.子.name}}</span><span class="p-ganzhi">{{gongs.子.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.子.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.子.auxStars}}</div>
+          <div class="small-star">{{gongs.子.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.子.daxian_range}}</div>
+        </div>
+        <!-- 亥 交友 -->
+        <div class="palace" data-zhi="亥">
+          <div class="p-head"><span class="p-dizhi">亥</span><span class="p-gong">{{gongs.亥.name}}</span><span class="p-ganzhi">{{gongs.亥.ganzhi}}</span></div>
+          <div class="main-star">{{gongs.亥.mainStarsHtml}}</div>
+          <div class="aux-star">{{gongs.亥.auxStars}}</div>
+          <div class="small-star">{{gongs.亥.smallStars}}</div>
+          <div class="daxian">大限 {{gongs.亥.daxian_range}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BAZI -->
+    <div class="bazi-pan">
+      <h3>八字四柱盘 <small>藏干含十神 / 星运 / 自坐 / 纳音</small></h3>
+      <div class="bazi-body">
+        <div class="bazi-pillars">
+          <div class="b-col">
+            <div class="b-head">年柱</div>
+            <div class="b-shishen">{{bazi.year.shiShen}}</div>
+            <div class="b-gan">{{bazi.year.gan}}</div>
+            <div class="b-zhi">{{bazi.year.zhi}}</div>
+            <div class="b-canggan">{{bazi.year.cangGanHtml}}</div>
+            <div class="b-extra">
+              <div class="b-extra-row"><span class="ek">星运</span><span>{{bazi.year.zhangSheng}}</span></div>
+              <div class="b-extra-row"><span class="ek">自坐</span><span>{{bazi.year.ziZuo}}</span></div>
+              <div class="b-extra-row"><span class="ek">纳音</span><span>{{bazi.year.naYin}}</span></div>
+            </div>
+          </div>
+          <div class="b-col">
+            <div class="b-head">月柱</div>
+            <div class="b-shishen">{{bazi.month.shiShen}}</div>
+            <div class="b-gan">{{bazi.month.gan}}</div>
+            <div class="b-zhi">{{bazi.month.zhi}}</div>
+            <div class="b-canggan">{{bazi.month.cangGanHtml}}</div>
+            <div class="b-extra">
+              <div class="b-extra-row"><span class="ek">星运</span><span>{{bazi.month.zhangSheng}}</span></div>
+              <div class="b-extra-row"><span class="ek">自坐</span><span>{{bazi.month.ziZuo}}</span></div>
+              <div class="b-extra-row"><span class="ek">纳音</span><span>{{bazi.month.naYin}}</span></div>
+            </div>
+          </div>
+          <div class="b-col">
+            <div class="b-head">日柱</div>
+            <div class="b-shishen dayMaster">日主</div>
+            <div class="b-gan">{{bazi.day.gan}}</div>
+            <div class="b-zhi">{{bazi.day.zhi}}</div>
+            <div class="b-canggan">{{bazi.day.cangGanHtml}}</div>
+            <div class="b-extra">
+              <div class="b-extra-row"><span class="ek">星运</span><span>{{bazi.day.zhangSheng}}</span></div>
+              <div class="b-extra-row"><span class="ek">自坐</span><span>{{bazi.day.ziZuo}}</span></div>
+              <div class="b-extra-row"><span class="ek">纳音</span><span>{{bazi.day.naYin}}</span></div>
+            </div>
+          </div>
+          <div class="b-col">
+            <div class="b-head">时柱</div>
+            <div class="b-shishen">{{bazi.hour.shiShen}}</div>
+            <div class="b-gan">{{bazi.hour.gan}}</div>
+            <div class="b-zhi">{{bazi.hour.zhi}}</div>
+            <div class="b-canggan">{{bazi.hour.cangGanHtml}}</div>
+            <div class="b-extra">
+              <div class="b-extra-row"><span class="ek">星运</span><span>{{bazi.hour.zhangSheng}}</span></div>
+              <div class="b-extra-row"><span class="ek">自坐</span><span>{{bazi.hour.ziZuo}}</span></div>
+              <div class="b-extra-row"><span class="ek">纳音</span><span>{{bazi.hour.naYin}}</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAYUN -->
+        <div class="dayun-strip">
+          <div class="strip-head">大运 <span class="small">(起运 {{bazi.dayunStart}} 岁)</span></div>
+          <div class="strip-row">
+            <div class="strip-cell {{dayun.0.current_class}}"><div class="gz">{{dayun.0.gz}}</div><div class="ages num">{{dayun.0.age_range}}</div><div class="ss">{{dayun.0.shishen}}</div></div>
+            <div class="strip-cell {{dayun.1.current_class}}"><div class="gz">{{dayun.1.gz}}</div><div class="ages num">{{dayun.1.age_range}}</div><div class="ss">{{dayun.1.shishen}}</div></div>
+            <div class="strip-cell {{dayun.2.current_class}}"><div class="gz">{{dayun.2.gz}}</div><div class="ages num">{{dayun.2.age_range}}</div><div class="ss">{{dayun.2.shishen}}</div></div>
+            <div class="strip-cell {{dayun.3.current_class}}"><div class="gz">{{dayun.3.gz}}</div><div class="ages num">{{dayun.3.age_range}}</div><div class="ss">{{dayun.3.shishen}}</div></div>
+            <div class="strip-cell {{dayun.4.current_class}}"><div class="gz">{{dayun.4.gz}}</div><div class="ages num">{{dayun.4.age_range}}</div><div class="ss">{{dayun.4.shishen}}</div></div>
+            <div class="strip-cell {{dayun.5.current_class}}"><div class="gz">{{dayun.5.gz}}</div><div class="ages num">{{dayun.5.age_range}}</div><div class="ss">{{dayun.5.shishen}}</div></div>
+            <div class="strip-cell {{dayun.6.current_class}}"><div class="gz">{{dayun.6.gz}}</div><div class="ages num">{{dayun.6.age_range}}</div><div class="ss">{{dayun.6.shishen}}</div></div>
+            <div class="strip-cell {{dayun.7.current_class}}"><div class="gz">{{dayun.7.gz}}</div><div class="ages num">{{dayun.7.age_range}}</div><div class="ss">{{dayun.7.shishen}}</div></div>
+            <div class="strip-cell {{dayun.8.current_class}}"><div class="gz">{{dayun.8.gz}}</div><div class="ages num">{{dayun.8.age_range}}</div><div class="ss">{{dayun.8.shishen}}</div></div>
+            <div class="strip-cell {{dayun.9.current_class}}"><div class="gz">{{dayun.9.gz}}</div><div class="ages num">{{dayun.9.age_range}}</div><div class="ss">{{dayun.9.shishen}}</div></div>
+          </div>
+        </div>
+
+        <!-- LIUNIAN -->
+        <div class="liunian-strip">
+          <div class="strip-head">流年 <span class="small">(当前大运：{{liunian_dayun_label}})</span></div>
+          <div class="strip-row">
+            <div class="strip-cell {{liunian.0.current_class}}"><div class="ages num">{{liunian.0.year}}</div><div class="ages num">{{liunian.0.age}}</div><div class="gz">{{liunian.0.gz}}</div><div class="ss">{{liunian.0.shishen}}</div></div>
+            <div class="strip-cell {{liunian.1.current_class}}"><div class="ages num">{{liunian.1.year}}</div><div class="ages num">{{liunian.1.age}}</div><div class="gz">{{liunian.1.gz}}</div><div class="ss">{{liunian.1.shishen}}</div></div>
+            <div class="strip-cell {{liunian.2.current_class}}"><div class="ages num">{{liunian.2.year}}</div><div class="ages num">{{liunian.2.age}}</div><div class="gz">{{liunian.2.gz}}</div><div class="ss">{{liunian.2.shishen}}</div></div>
+            <div class="strip-cell {{liunian.3.current_class}}"><div class="ages num">{{liunian.3.year}}</div><div class="ages num">{{liunian.3.age}}</div><div class="gz">{{liunian.3.gz}}</div><div class="ss">{{liunian.3.shishen}}</div></div>
+            <div class="strip-cell {{liunian.4.current_class}}"><div class="ages num">{{liunian.4.year}}</div><div class="ages num">{{liunian.4.age}}</div><div class="gz">{{liunian.4.gz}}</div><div class="ss">{{liunian.4.shishen}}</div></div>
+            <div class="strip-cell {{liunian.5.current_class}}"><div class="ages num">{{liunian.5.year}}</div><div class="ages num">{{liunian.5.age}}</div><div class="gz">{{liunian.5.gz}}</div><div class="ss">{{liunian.5.shishen}}</div></div>
+            <div class="strip-cell {{liunian.6.current_class}}"><div class="ages num">{{liunian.6.year}}</div><div class="ages num">{{liunian.6.age}}</div><div class="gz">{{liunian.6.gz}}</div><div class="ss">{{liunian.6.shishen}}</div></div>
+            <div class="strip-cell {{liunian.7.current_class}}"><div class="ages num">{{liunian.7.year}}</div><div class="ages num">{{liunian.7.age}}</div><div class="gz">{{liunian.7.gz}}</div><div class="ss">{{liunian.7.shishen}}</div></div>
+            <div class="strip-cell {{liunian.8.current_class}}"><div class="ages num">{{liunian.8.year}}</div><div class="ages num">{{liunian.8.age}}</div><div class="gz">{{liunian.8.gz}}</div><div class="ss">{{liunian.8.shishen}}</div></div>
+            <div class="strip-cell {{liunian.9.current_class}}"><div class="ages num">{{liunian.9.year}}</div><div class="ages num">{{liunian.9.age}}</div><div class="gz">{{liunian.9.gz}}</div><div class="ss">{{liunian.9.shishen}}</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ NUMBERED SECTIONS ============ -->
+
+  <div class="row-2col">
+    <!-- 01 主轴印证结论 -->
+    <section class="section">
+      <h2><span class="num-box">01</span>主轴印证结论</h2>
+      <div class="axis-conclusion">
+        {{section_01.text}}
+        <div class="wc">字数：{{section_01.word_count}}</div>
+      </div>
+    </section>
+
+    <!-- 02 阶段印证时间轴 -->
+    <section class="section">
+      <h2><span class="num-box">02</span>阶段印证时间轴 <small style="font-size:11px;color:var(--ink-soft);font-weight:normal">（水平双轨）</small></h2>
+      <div class="stage-legend">
+        <span><span class="dot up"></span>关键上升期</span>
+        <span><span class="dot flat"></span>调整期</span>
+        <span><span class="dot down"></span>压力期</span>
+      </div>
+      <div class="stage-grid">
+        <div class="sg-label">八字大运</div>
+        <div class="stage-head">{{section_02.bazi.0.range}}</div>
+        <div class="stage-head">{{section_02.bazi.1.range}}</div>
+        <div class="stage-head">{{section_02.bazi.2.range}}</div>
+        <div class="stage-head {{section_02.bazi.3.current_class}}">{{section_02.bazi.3.range}}</div>
+        <div class="stage-head">{{section_02.bazi.4.range}}</div>
+        <div class="stage-head">{{section_02.bazi.5.range}}</div>
+        <div class="stage-head">{{section_02.bazi.6.range}}</div>
+
+        <div class="sg-label">八字大运</div>
+        <div>{{section_02.bazi.0.gz}}<br>{{section_02.bazi.0.shishen}}</div>
+        <div>{{section_02.bazi.1.gz}}<br>{{section_02.bazi.1.shishen}}</div>
+        <div>{{section_02.bazi.2.gz}}<br>{{section_02.bazi.2.shishen}}</div>
+        <div class="{{section_02.bazi.3.current_class}}">{{section_02.bazi.3.gz}}<br>{{section_02.bazi.3.shishen}}</div>
+        <div>{{section_02.bazi.4.gz}}<br>{{section_02.bazi.4.shishen}}</div>
+        <div>{{section_02.bazi.5.gz}}<br>{{section_02.bazi.5.shishen}}</div>
+        <div>{{section_02.bazi.6.gz}}<br>{{section_02.bazi.6.shishen}}</div>
+
+        <div class="sg-label">紫微大限</div>
+        <div>{{section_02.ziwei.0.range}}</div>
+        <div>{{section_02.ziwei.1.range}}</div>
+        <div>{{section_02.ziwei.2.range}}</div>
+        <div class="{{section_02.ziwei.3.current_class}}">{{section_02.ziwei.3.range}}</div>
+        <div>{{section_02.ziwei.4.range}}</div>
+        <div>{{section_02.ziwei.5.range}}</div>
+        <div>{{section_02.ziwei.6.range}}</div>
+      </div>
+      <div class="stage-conclusion">
+        <b>印证结论：</b>{{section_02.conclusion}}
+      </div>
+    </section>
+  </div>
+
+  <!-- 03 六维交叉对账 + 04 冲突清单 -->
+  <div class="row-2col">
+    <section class="section">
+      <h2><span class="num-box">03</span>六维交叉对账</h2>
+      <div class="cross-grid">
+        <div class="ch"></div>
+        <div class="ch">事业</div><div class="ch">财运</div><div class="ch">婚恋</div>
+        <div class="ch">子女</div><div class="ch">六亲</div><div class="ch">健康</div>
+
+        <div class="lh">八字观点</div>
+        <div>{{dim.career.bazi}}</div><div>{{dim.wealth.bazi}}</div><div>{{dim.marriage.bazi}}</div>
+        <div>{{dim.children.bazi}}</div><div>{{dim.family.bazi}}</div><div>{{dim.health.bazi}}</div>
+
+        <div class="lh">紫微观点</div>
+        <div>{{dim.career.ziwei}}</div><div>{{dim.wealth.ziwei}}</div><div>{{dim.marriage.ziwei}}</div>
+        <div>{{dim.children.ziwei}}</div><div>{{dim.family.ziwei}}</div><div>{{dim.health.ziwei}}</div>
+
+        <div class="lh">印证标记</div>
+        <div><span class="verdict-tag {{dim.career.verdict_class}}">{{dim.career.verdict}}</span></div>
+        <div><span class="verdict-tag {{dim.wealth.verdict_class}}">{{dim.wealth.verdict}}</span></div>
+        <div><span class="verdict-tag {{dim.marriage.verdict_class}}">{{dim.marriage.verdict}}</span></div>
+        <div><span class="verdict-tag {{dim.children.verdict_class}}">{{dim.children.verdict}}</span></div>
+        <div><span class="verdict-tag {{dim.family.verdict_class}}">{{dim.family.verdict}}</span></div>
+        <div><span class="verdict-tag {{dim.health.verdict_class}}">{{dim.health.verdict}}</span></div>
+
+        <div class="lh">融合结论</div>
+        <div>{{dim.career.fused}}</div><div>{{dim.wealth.fused}}</div><div>{{dim.marriage.fused}}</div>
+        <div>{{dim.children.fused}}</div><div>{{dim.family.fused}}</div><div>{{dim.health.fused}}</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2><span class="num-box">04</span>冲突清单 <small style="font-size:11px;color:var(--ink-soft);font-weight:normal">（已识别的主要冲突点）</small></h2>
+      <div class="conflict-grid">
+        <div class="ch">冲突点</div>
+        <div class="ch">八字视角</div>
+        <div class="ch">紫微视角</div>
+        <div class="ch">影响程度</div>
+        <div class="ch">建议</div>
+
+        <div>{{conflicts.0.point}}</div>
+        <div>{{conflicts.0.bazi}}</div>
+        <div>{{conflicts.0.ziwei}}</div>
+        <div><span class="impact-dot impact-{{conflicts.0.impact_class}}"></span>{{conflicts.0.impact}}</div>
+        <div>{{conflicts.0.advice}}</div>
+
+        <div>{{conflicts.1.point}}</div>
+        <div>{{conflicts.1.bazi}}</div>
+        <div>{{conflicts.1.ziwei}}</div>
+        <div><span class="impact-dot impact-{{conflicts.1.impact_class}}"></span>{{conflicts.1.impact}}</div>
+        <div>{{conflicts.1.advice}}</div>
+
+        <div>{{conflicts.2.point}}</div>
+        <div>{{conflicts.2.bazi}}</div>
+        <div>{{conflicts.2.ziwei}}</div>
+        <div><span class="impact-dot impact-{{conflicts.2.impact_class}}"></span>{{conflicts.2.impact}}</div>
+        <div>{{conflicts.2.advice}}</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 05 综合定论 -->
+  <section class="section">
+    <h2><span class="num-box">05</span>综合定论</h2>
+    <div class="final-grid">
+      <div class="final-block">
+        <h4>终极主轴</h4>
+        <div class="big">{{final.life_axis}}</div>
+      </div>
+      <div class="final-block">
+        <h4>5 个关键节点（人生里程碑）</h4>
+        <ul class="nodes-list">
+          <li>{{final.nodes.0.age}}岁（{{final.nodes.0.year}}）：{{final.nodes.0.event}}</li>
+          <li>{{final.nodes.1.age}}岁（{{final.nodes.1.year}}）：{{final.nodes.1.event}}</li>
+          <li>{{final.nodes.2.age}}岁（{{final.nodes.2.year}}）：{{final.nodes.2.event}}</li>
+          <li>{{final.nodes.3.age}}岁（{{final.nodes.3.year}}）：{{final.nodes.3.event}}</li>
+          <li>{{final.nodes.4.age}}岁（{{final.nodes.4.year}}）：{{final.nodes.4.event}}</li>
+        </ul>
+      </div>
+      <div class="final-block">
+        <h4>3 个高风险窗口 <small style="color:var(--ink-faint)">（需谨慎）</small></h4>
+        <div class="risk-item"><span class="head">{{final.risks.0.range}}</span><br>{{final.risks.0.desc}}</div>
+        <div class="risk-item"><span class="head">{{final.risks.1.range}}</span><br>{{final.risks.1.desc}}</div>
+        <div class="risk-item"><span class="head">{{final.risks.2.range}}</span><br>{{final.risks.2.desc}}</div>
+      </div>
+      <div class="final-block">
+        <h4>2 条优势放大策略</h4>
+        <div class="leverage-item"><span class="head">▸ {{final.leverage.0.title}}</span><br>{{final.leverage.0.desc}}</div>
+        <div class="leverage-item"><span class="head">▸ {{final.leverage.1.title}}</span><br>{{final.leverage.1.desc}}</div>
+      </div>
+      <div class="final-block">
+        <h4>行动建议清单 <small style="color:var(--ink-faint)">（优先级）</small></h4>
+        <div class="advice-item"><span class="num">1</span>{{final.advice.0}}</div>
+        <div class="advice-item"><span class="num">2</span>{{final.advice.1}}</div>
+        <div class="advice-item"><span class="num">3</span>{{final.advice.2}}</div>
+        <div class="advice-item"><span class="num">4</span>{{final.advice.3}}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 置信度 -->
+  <section class="section">
+    <h2><span class="num-box">06</span>置信度自评 <small style="font-size:11px;color:var(--ink-soft);font-weight:normal">（综合模型不确定性）</small></h2>
+    <div class="confidence-row">
+      <div class="conf-card">
+        <div class="label">八字模型置信度</div>
+        <div class="level">{{confidence.bazi_level}}</div>
+        <div class="score">({{confidence.bazi_score}})</div>
+      </div>
+      <div class="conf-card">
+        <div class="label">紫微模型置信度</div>
+        <div class="level">{{confidence.ziwei_level}}</div>
+        <div class="score">({{confidence.ziwei_score}})</div>
+      </div>
+      <div class="conf-card">
+        <div class="label">两盘印证一致性</div>
+        <div class="level">{{confidence.consistency_level}}</div>
+        <div class="score">({{confidence.consistency_score}})</div>
+      </div>
+      <div class="conf-card">
+        <div class="label">关键结论稳定性</div>
+        <div class="level">{{confidence.stability_level}}</div>
+        <div class="score">({{confidence.stability_score}})</div>
+      </div>
+      <div class="conf-note">
+        <b>说明：</b>{{confidence.note}}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <div class="footer-disclaim">
+    <span>① 命理分析仅供参考，不构成任何决策依据。人生的方向掌握在自己手中。</span>
+    <span class="footer-seal">承运<br>承业</span>
+  </div>
+
+</div>
+</body>
+</html>

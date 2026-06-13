@@ -1,0 +1,33 @@
+bazi-ziwei-skill
+Copyright (c) 2026 dzcmemory-web
+
+================================================================================
+本项目包含以下第三方开源组件
+This product includes third-party open-source components.
+================================================================================
+
+1. Yiqi-BaZi-ZiWei (易奇八字紫微排盘系统 / BZZW)
+   ------------------------------------------------------------
+   上游 / Upstream: https://github.com/fdxuyq/Yiqi-BaZi-ZiWei
+   位置 / Location: calculator/yiqi-core/
+   说明 / Description:
+     紫微斗数与八字的核心排盘算法（四柱、十神、星运、纳音、大运、流年、
+     十二宫、生年四化、大限等）来自该上游项目，经少量改造后内置（vendored）
+     于本仓库 calculator/yiqi-core/ 目录。
+     The core charting algorithms (four pillars, ten gods, na-yin, luck cycles,
+     twelve palaces, birth-year transformations, major limits, etc.) are
+     derived from this upstream project and vendored, with minor edits, into
+     calculator/yiqi-core/.
+   许可 / License: MIT (per upstream project README)
+
+2. lunar-typescript
+   ------------------------------------------------------------
+   使用方式 / Usage: npm dependency (calculator/package.json)
+   说明 / Description: 农历 / 节气 / 干支换算底层库。
+   许可 / License: MIT
+
+================================================================================
+本项目自有部分（calculator/bazi-enrich/、prompts/、templates/、render.ts、
+dump-text.ts、run-chart.ts 等）以 MIT 协议发布，见 LICENSE 文件。
+The original parts of this project are released under the MIT License (see LICENSE).
+================================================================================

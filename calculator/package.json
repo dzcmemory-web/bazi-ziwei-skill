@@ -1,0 +1,19 @@
+{
+  "name": "bazi-ziwei-calculator",
+  "version": "0.1.0",
+  "description": "八字+紫微算法层 — Yiqi core (vendored, MIT) + enrichBazi 补层",
+  "private": true,
+  "scripts": {
+    "chart": "tsx run-chart.ts",
+    "dump": "tsx dump-text.ts",
+    "render": "tsx render.ts"
+  },
+  "dependencies": {
+    "lunar-typescript": "^1.8.6"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "~5.6.2",
+    "@types/node": "^22.0.0"
+  }
+}
