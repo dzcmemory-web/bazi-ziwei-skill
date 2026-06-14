@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": ".",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmitOnError": false,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": [
+    "run-chart.ts",
+    "dump-text.ts",
+    "render.ts",
+    "yiqi-core/**/*.ts",
+    "bazi-enrich/**/*.ts"
+  ]
+}

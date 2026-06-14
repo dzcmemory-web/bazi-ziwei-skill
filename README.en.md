@@ -96,11 +96,11 @@ See [`SKILL.md`](./SKILL.md) for the full flow and [`TEST-GUIDE.md`](./TEST-GUID
 ```bash
 cd calculator
 # chart -> JSON
-npx tsx run-chart.ts --year=2000 --month=1 --day=1 --hour=12 --minute=0 --gender=male > chart.json
+node dist/run-chart.js --year=2000 --month=1 --day=1 --hour=12 --minute=0 --gender=male > chart.json
 # JSON -> readable text chart
-npx tsx dump-text.ts --input=chart.json --output=chart.txt
+node dist/dump-text.js --input=chart.json --output=chart.txt
 # JSON + analysis JSON + template -> HTML poster
-npx tsx render.ts --chart=chart.json --analysis=analysis.json \
+node dist/render.js --chart=chart.json --analysis=analysis.json \
   --template=../templates/report-zonghe-poster.html --output=report.html --currentYear=2026
 ```
 

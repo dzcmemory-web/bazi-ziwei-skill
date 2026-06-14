@@ -12,7 +12,7 @@
 ```bash
 cd calculator
 npm install          # 首次使用需要
-npx tsx run-chart.ts --year=2000 --month=1 --day=1 --hour=12 --minute=0 --gender=male > smoke.json
+node dist/run-chart.js --year=2000 --month=1 --day=1 --hour=12 --minute=0 --gender=male > smoke.json
 ```
 
 **预期**：
@@ -119,7 +119,7 @@ node -e "const j=require('./smoke.json'); console.log('日柱:', j.bazi.siZhu.da
 5. 跑渲染脚本：
    ```bash
    cd calculator
-   npx tsx render.ts \
+   node dist/render.js \
      --chart=chart.json \
      --analysis=analysis.json \
      --template=../templates/report-zonghe-poster.html \
@@ -163,7 +163,8 @@ node -e "const j=require('./analysis.json'); console.log('strengths:', j.strengt
 |---|---|---|
 | Agent 找不到 Skill | SKILL.md 不在 Agent 扫描路径 | 把整个仓库放进 Agent 的 skills 目录（如 `~/.claude/skills/bazi-ziwei/`） |
 | 排盘脚本报错 | 时辰格式错 / 日期超 1900-2100 | 校正输入 |
-| `npx tsx` 报找不到模块 | 没装依赖 | `cd calculator && npm install` |
+| `node dist/...` 报找不到模块 | 没装依赖 | `cd calculator && npm install` |
+| 改了 .ts 源码后没生效 | dist 是预编译产物 | 重新编译 `npm run build` |
 | 渲染 HTML 后全是占位符 | analysis.json 解析失败 | 看 analysis.json 第一字符是不是 `{`，不是就剥掉 markdown 包装 |
 | 海报里命主信息错 | LLM 自行排盘没用算法层 | 重跑，强调"必须读 chart.txt 不要自己排" |
 | 当前大限算错 | `--currentYear` 没传或传错 | 渲染时加 `--currentYear=<当前年份>` |

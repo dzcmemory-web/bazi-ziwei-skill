@@ -65,7 +65,7 @@ description: 八字 + 紫微斗数 AI 排盘与综合分析。当用户提供生
 
 ```bash
 cd calculator
-npx tsx run-chart.ts --year=YYYY --month=MM --day=DD --hour=HH --minute=MM --gender=male > chart.json
+node dist/run-chart.js --year=YYYY --month=MM --day=DD --hour=HH --minute=MM --gender=male > chart.json
 ```
 
 **注意**：`run-chart.ts` 的 stdout 是纯 JSON，stderr 是 debug 信息。**重定向时只取 stdout**（`> chart.json`），不要 `2>&1`。
@@ -84,7 +84,7 @@ npx tsx run-chart.ts --year=YYYY --month=MM --day=DD --hour=HH --minute=MM --gen
 LLM 读 JSON 不如读结构化文本。把 Step 1 的 JSON 转成文墨天机风格的树状文本：
 
 ```bash
-npx tsx dump-text.ts --input=chart.json --output=chart.txt
+node dist/dump-text.js --input=chart.json --output=chart.txt
 ```
 
 文本盘包含：
@@ -110,7 +110,7 @@ npx tsx dump-text.ts --input=chart.json --output=chart.txt
 4. 调用渲染脚本：
    ```bash
    cd calculator
-   npx tsx render.ts \
+   node dist/render.js \
      --chart=chart.json \
      --analysis=analysis.json \
      --template=../templates/report-zonghe-poster.html \
