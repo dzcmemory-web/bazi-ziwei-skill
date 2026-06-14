@@ -18,5 +18,9 @@
     "render.ts",
     "yiqi-core/**/*.ts",
     "bazi-enrich/**/*.ts"
+  ],
+  "exclude": [
+    "bazi-enrich/print-full.ts",
+    "bazi-enrich/test-case-b.ts"
   ]
 }
