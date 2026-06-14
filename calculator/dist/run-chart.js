@@ -2,7 +2,7 @@
 // 排盘单一入口 — 输入生辰, 输出完整 JSON (Yiqi createChart + enrichBazi)
 //
 // 用法:
-//   npx tsx run-chart.ts --year=1991 --month=11 --day=14 --hour=9 --minute=30 --gender=male
+//   npx tsx run-chart.ts --year=2000 --month=1 --day=1 --hour=12 --minute=0 --gender=male
 //   可选: --isLunar=true --timeZone=8 --output=path/to/file.json
 //
 // 不指定 --output 则打印到 stdout
@@ -49,7 +49,7 @@ function main() {
     for (const k of required) {
         if (!args[k]) {
             console.error(`Missing required arg: --${k}=...`);
-            console.error('Usage: npx tsx run-chart.ts --year=1991 --month=11 --day=14 --hour=9 --minute=30 --gender=male');
+            console.error('Usage: npx tsx run-chart.ts --year=2000 --month=1 --day=1 --hour=12 --minute=0 --gender=male');
             process.exit(1);
         }
     }

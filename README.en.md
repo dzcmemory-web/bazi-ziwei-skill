@@ -131,9 +131,6 @@ bazi-ziwei-skill/
 │   └── zonghe-poster.md           cross-validation (poster JSON output)
 ├── templates/
 │   └── report-zonghe-poster.html  cross-validation poster template (placeholders)
-├── docs/
-│   ├── OUTPUT-SCHEMA.md           output structure spec
-│   └── UI-DESIGN.md               visual design doc
 └── examples/
     ├── sample-chart.json          synthetic sample chart
     └── sample-chart.txt           synthetic text chart

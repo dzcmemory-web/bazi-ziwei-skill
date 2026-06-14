@@ -170,9 +170,7 @@ ls node_modules >/dev/null 2>&1 || npm install
 │   ├── zonghe-yinzheng-prompt.md     ← ⭐ 综合印证（长文）
 │   └── zonghe-poster.md              ← ⭐ 综合印证（海报版 JSON 输出）
 ├── templates/
-│   ├── report-zonghe-poster.html     ← 综合印证海报模板（占位符）
-│   ├── UI-DESIGN.md                  ← 视觉设计文档
-│   └── OUTPUT-SCHEMA.md              ← 输出结构规范
+│   └── report-zonghe-poster.html     ← 综合印证海报模板（占位符）
 └── fixtures/                         ← 7 个验证案例（Case A-G）
 ```
 

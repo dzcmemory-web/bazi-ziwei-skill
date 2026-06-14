@@ -131,9 +131,6 @@ bazi-ziwei-skill/
 │   └── zonghe-poster.md           综合印证（海报 JSON 输出）
 ├── templates/
 │   └── report-zonghe-poster.html  综合印证海报模板（占位符）
-├── docs/
-│   ├── OUTPUT-SCHEMA.md           输出结构规范
-│   └── UI-DESIGN.md               视觉设计文档
 └── examples/
     ├── sample-chart.json          合成示例排盘
     └── sample-chart.txt           合成示例文本盘
