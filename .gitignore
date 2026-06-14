@@ -17,6 +17,11 @@ report.html
 *-report.html
 *-zonghe.html
 
+# 但仓库自带的合成示例必须入库（白名单放行）
+!examples/sample-chart.json
+!examples/sample-analysis.json
+!examples/sample-report.html
+
 # editor
 .vscode/
 .idea/

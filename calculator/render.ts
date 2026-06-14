@@ -100,7 +100,7 @@ function chartToFlat(chart: any, currentYear?: number): Record<string, any> {
           return s;
         }).join('·')
       : '<span style="color:var(--ink-faint)">无主星</span>';
-    out[`gongs.${g.dizhi}.name`] = g.gong + '宫';
+    out[`gongs.${g.dizhi}.name`] = g.gong.endsWith('宫') ? g.gong : g.gong + '宫';
     out[`gongs.${g.dizhi}.ganzhi`] = g.tiangan + g.dizhi;
     out[`gongs.${g.dizhi}.mainStarsHtml`] = mainStarsHtml;
     out[`gongs.${g.dizhi}.auxStars`] = g.auxStars && g.auxStars.length ? g.auxStars.join('·') : '—';
