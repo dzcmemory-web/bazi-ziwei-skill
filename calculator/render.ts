@@ -106,6 +106,13 @@ function chartToFlat(chart: any, currentYear?: number): Record<string, any> {
     out[`gongs.${g.dizhi}.auxStars`] = g.auxStars && g.auxStars.length ? g.auxStars.join('·') : '—';
     out[`gongs.${g.dizhi}.smallStars`] = '';
     out[`gongs.${g.dizhi}.daxian_range`] = g.daXian ? `${g.daXian.startAge}-${g.daXian.endAge}` : '-';
+    // 命宫红框 / 身宫徽标 / 当前大限高亮 — 数据驱动, 不硬编码到模板
+    const flags: string[] = [];
+    if (g.dizhi === mingDizhi) flags.push('ming');
+    if (g.dizhi === shenDizhi) flags.push('shen');
+    if (g.daXian && g.daXian.startAge <= virtualAge && virtualAge <= g.daXian.endAge) flags.push('current-daxian');
+    out[`gongs.${g.dizhi}.flag`] = flags.join(' ');
+    out[`gongs.${g.dizhi}.shenBadge`] = (g.dizhi === shenDizhi) ? '<span class="shen-badge">身</span>' : '';
   }
 
   // ============ BAZI 4 PILLARS ============

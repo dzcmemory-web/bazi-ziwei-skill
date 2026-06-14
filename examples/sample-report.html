@@ -267,22 +267,20 @@
     display: flex; flex-direction: column;
   }
   .palace.ming { box-shadow: inset 0 0 0 2px var(--vermillion); }
-  .palace.shen::after {
-    content: "身"; position: absolute; top: 4px; right: 4px;
+  .palace.ming .p-gong { color: var(--vermillion); }
+  /* 身宫: 宫名后的内联小徽标, 不绝对定位, 不遮挡内容 */
+  .shen-badge {
+    display: inline-block; margin-left: 3px;
     color: var(--vermillion); border: 1px solid var(--vermillion);
-    width: 14px; height: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px;
-  }
-  .palace.laiyin::before {
-    content: "来因"; position: absolute; bottom: 4px; right: 4px;
-    color: var(--ink-faint); font-size: 8px;
+    border-radius: 2px; font-size: 8px; line-height: 1.2;
+    padding: 0 2px; vertical-align: middle; font-weight: normal;
   }
   .palace .p-head {
-    display: flex; justify-content: space-between;
+    display: flex; justify-content: space-between; align-items: baseline;
     border-bottom: 1px dashed var(--line-soft);
     padding-bottom: 2px; margin-bottom: 3px;
   }
+  .palace .p-head .p-gong-wrap { display: flex; align-items: center; }
   .palace .p-dizhi { color: var(--ink-soft); }
   .palace .p-gong { font-weight: bold; }
   .palace .p-ganzhi { font-size: 9px; color: var(--ink-faint); }
@@ -559,7 +557,7 @@
       <div class="subtitle">紫微坐命气度沉稳，正财厚土宜守成积累，忌冲动投机</div>
     </div>
     <div class="header-right">
-      <div class="gen-time">生成时间：<span class="num">2026-06-14 10:00</span></div>
+      <div class="gen-time">生成时间：<span class="num">2026-06-14 10:13</span></div>
       <div>综合印证评级</div>
       <div class="badge-grade">✓ 同向印证</div>
       <div class="meta-row">
@@ -668,7 +666,7 @@
       <h3>紫微斗数 · 十二宫盘 <small>生年四化：<span class="sh-禄">禄朱砂</span> / <span class="sh-权">权青蓝</span> / <span class="sh-科">科翠绿</span> / <span class="sh-忌">忌玄黑</span></small></h3>
       <div class="ziwei-grid">
         <!-- 巳 兄弟 -->
-        <div class="palace" data-zhi="巳">
+        <div class="palace " data-zhi="巳">
           <div class="p-head"><span class="p-dizhi">巳</span><span class="p-gong">兄弟宫</span><span class="p-ganzhi">己巳</span></div>
           <div class="main-star">天机</div>
           <div class="aux-star">天马·陀罗·地空·地劫</div>
@@ -676,15 +674,15 @@
           <div class="daxian">大限 115-124</div>
         </div>
         <!-- 午 命宫 -->
-        <div class="palace ming" data-zhi="午">
-          <div class="p-head"><span class="p-dizhi">午</span><span class="p-gong" style="color:var(--vermillion)">命宫</span><span class="p-ganzhi">庚午</span></div>
+        <div class="palace ming shen" data-zhi="午">
+          <div class="p-head"><span class="p-dizhi">午</span><span class="p-gong">命宫</span><span class="shen-badge">身</span><span class="p-ganzhi">庚午</span></div>
           <div class="main-star">紫微</div>
           <div class="aux-star">禄存·天喜</div>
           <div class="small-star"></div>
           <div class="daxian">大限 5-14</div>
         </div>
         <!-- 未 父母 -->
-        <div class="palace" data-zhi="未">
+        <div class="palace " data-zhi="未">
           <div class="p-head"><span class="p-dizhi">未</span><span class="p-gong">父母宫</span><span class="p-ganzhi">辛未</span></div>
           <div class="main-star"><span style="color:var(--ink-faint)">无主星</span></div>
           <div class="aux-star">擎羊·天刑</div>
@@ -692,7 +690,7 @@
           <div class="daxian">大限 15-24</div>
         </div>
         <!-- 申 福德 -->
-        <div class="palace" data-zhi="申">
+        <div class="palace current-daxian" data-zhi="申">
           <div class="p-head"><span class="p-dizhi">申</span><span class="p-gong">福德宫</span><span class="p-ganzhi">壬申</span></div>
           <div class="main-star">破军</div>
           <div class="aux-star">天钺</div>
@@ -700,7 +698,7 @@
           <div class="daxian">大限 25-34</div>
         </div>
         <!-- 辰 夫妻(身) -->
-        <div class="palace shen" data-zhi="辰">
+        <div class="palace " data-zhi="辰">
           <div class="p-head"><span class="p-dizhi">辰</span><span class="p-gong">夫妻宫</span><span class="p-ganzhi">戊辰</span></div>
           <div class="main-star">七杀</div>
           <div class="aux-star">文昌·铃星</div>
@@ -720,7 +718,7 @@
           </div>
         </div>
         <!-- 酉 田宅 -->
-        <div class="palace" data-zhi="酉">
+        <div class="palace " data-zhi="酉">
           <div class="p-head"><span class="p-dizhi">酉</span><span class="p-gong">田宅宫</span><span class="p-ganzhi">癸酉</span></div>
           <div class="main-star"><span style="color:var(--ink-faint)">无主星</span></div>
           <div class="aux-star">—</div>
@@ -728,7 +726,7 @@
           <div class="daxian">大限 35-44</div>
         </div>
         <!-- 卯 子女(来因) -->
-        <div class="palace laiyin" data-zhi="卯">
+        <div class="palace " data-zhi="卯">
           <div class="p-head"><span class="p-dizhi">卯</span><span class="p-gong">子女宫</span><span class="p-ganzhi">丁卯</span></div>
           <div class="main-star">太阳·<span class="sihua-科">天梁<span class="sihua-tag">科</span></span></div>
           <div class="aux-star">火星</div>
@@ -736,7 +734,7 @@
           <div class="daxian">大限 95-104</div>
         </div>
         <!-- 戌 官禄 -->
-        <div class="palace" data-zhi="戌">
+        <div class="palace " data-zhi="戌">
           <div class="p-head"><span class="p-dizhi">戌</span><span class="p-gong">官禄宫</span><span class="p-ganzhi">甲戌</span></div>
           <div class="main-star">廉贞·天府</div>
           <div class="aux-star">文曲</div>
@@ -744,7 +742,7 @@
           <div class="daxian">大限 45-54</div>
         </div>
         <!-- 寅 财帛 -->
-        <div class="palace" data-zhi="寅">
+        <div class="palace " data-zhi="寅">
           <div class="p-head"><span class="p-dizhi">寅</span><span class="p-gong">财帛宫</span><span class="p-ganzhi">丙寅</span></div>
           <div class="main-star"><span class="sihua-禄">武曲<span class="sihua-tag">禄</span></span>·天相</div>
           <div class="aux-star">左辅</div>
@@ -752,7 +750,7 @@
           <div class="daxian">大限 85-94</div>
         </div>
         <!-- 丑 疾厄 -->
-        <div class="palace" data-zhi="丑">
+        <div class="palace " data-zhi="丑">
           <div class="p-head"><span class="p-dizhi">丑</span><span class="p-gong">疾厄宫</span><span class="p-ganzhi">丁丑</span></div>
           <div class="main-star">天同·巨门</div>
           <div class="aux-star">—</div>
@@ -760,7 +758,7 @@
           <div class="daxian">大限 75-84</div>
         </div>
         <!-- 子 迁移 -->
-        <div class="palace" data-zhi="子">
+        <div class="palace " data-zhi="子">
           <div class="p-head"><span class="p-dizhi">子</span><span class="p-gong">迁移宫</span><span class="p-ganzhi">丙子</span></div>
           <div class="main-star"><span class="sihua-权">贪狼<span class="sihua-tag">权</span></span></div>
           <div class="aux-star">右弼·天魁·红鸾</div>
@@ -768,7 +766,7 @@
           <div class="daxian">大限 65-74</div>
         </div>
         <!-- 亥 交友 -->
-        <div class="palace" data-zhi="亥">
+        <div class="palace " data-zhi="亥">
           <div class="p-head"><span class="p-dizhi">亥</span><span class="p-gong">交友宫</span><span class="p-ganzhi">乙亥</span></div>
           <div class="main-star">太阴</div>
           <div class="aux-star">天姚</div>

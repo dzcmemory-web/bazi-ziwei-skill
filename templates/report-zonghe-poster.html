@@ -267,22 +267,20 @@
     display: flex; flex-direction: column;
   }
   .palace.ming { box-shadow: inset 0 0 0 2px var(--vermillion); }
-  .palace.shen::after {
-    content: "身"; position: absolute; top: 4px; right: 4px;
+  .palace.ming .p-gong { color: var(--vermillion); }
+  /* 身宫: 宫名后的内联小徽标, 不绝对定位, 不遮挡内容 */
+  .shen-badge {
+    display: inline-block; margin-left: 3px;
     color: var(--vermillion); border: 1px solid var(--vermillion);
-    width: 14px; height: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px;
-  }
-  .palace.laiyin::before {
-    content: "来因"; position: absolute; bottom: 4px; right: 4px;
-    color: var(--ink-faint); font-size: 8px;
+    border-radius: 2px; font-size: 8px; line-height: 1.2;
+    padding: 0 2px; vertical-align: middle; font-weight: normal;
   }
   .palace .p-head {
-    display: flex; justify-content: space-between;
+    display: flex; justify-content: space-between; align-items: baseline;
     border-bottom: 1px dashed var(--line-soft);
     padding-bottom: 2px; margin-bottom: 3px;
   }
+  .palace .p-head .p-gong-wrap { display: flex; align-items: center; }
   .palace .p-dizhi { color: var(--ink-soft); }
   .palace .p-gong { font-weight: bold; }
   .palace .p-ganzhi { font-size: 9px; color: var(--ink-faint); }
@@ -668,40 +666,40 @@
       <h3>紫微斗数 · 十二宫盘 <small>生年四化：<span class="sh-禄">禄朱砂</span> / <span class="sh-权">权青蓝</span> / <span class="sh-科">科翠绿</span> / <span class="sh-忌">忌玄黑</span></small></h3>
       <div class="ziwei-grid">
         <!-- 巳 兄弟 -->
-        <div class="palace" data-zhi="巳">
-          <div class="p-head"><span class="p-dizhi">巳</span><span class="p-gong">{{gongs.巳.name}}</span><span class="p-ganzhi">{{gongs.巳.ganzhi}}</span></div>
+        <div class="palace {{gongs.巳.flag}}" data-zhi="巳">
+          <div class="p-head"><span class="p-dizhi">巳</span><span class="p-gong">{{gongs.巳.name}}</span>{{gongs.巳.shenBadge}}<span class="p-ganzhi">{{gongs.巳.ganzhi}}</span></div>
           <div class="main-star">{{gongs.巳.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.巳.auxStars}}</div>
           <div class="small-star">{{gongs.巳.smallStars}}</div>
           <div class="daxian">大限 {{gongs.巳.daxian_range}}</div>
         </div>
         <!-- 午 命宫 -->
-        <div class="palace ming" data-zhi="午">
-          <div class="p-head"><span class="p-dizhi">午</span><span class="p-gong" style="color:var(--vermillion)">{{gongs.午.name}}</span><span class="p-ganzhi">{{gongs.午.ganzhi}}</span></div>
+        <div class="palace {{gongs.午.flag}}" data-zhi="午">
+          <div class="p-head"><span class="p-dizhi">午</span><span class="p-gong">{{gongs.午.name}}</span>{{gongs.午.shenBadge}}<span class="p-ganzhi">{{gongs.午.ganzhi}}</span></div>
           <div class="main-star">{{gongs.午.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.午.auxStars}}</div>
           <div class="small-star">{{gongs.午.smallStars}}</div>
           <div class="daxian">大限 {{gongs.午.daxian_range}}</div>
         </div>
         <!-- 未 父母 -->
-        <div class="palace" data-zhi="未">
-          <div class="p-head"><span class="p-dizhi">未</span><span class="p-gong">{{gongs.未.name}}</span><span class="p-ganzhi">{{gongs.未.ganzhi}}</span></div>
+        <div class="palace {{gongs.未.flag}}" data-zhi="未">
+          <div class="p-head"><span class="p-dizhi">未</span><span class="p-gong">{{gongs.未.name}}</span>{{gongs.未.shenBadge}}<span class="p-ganzhi">{{gongs.未.ganzhi}}</span></div>
           <div class="main-star">{{gongs.未.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.未.auxStars}}</div>
           <div class="small-star">{{gongs.未.smallStars}}</div>
           <div class="daxian">大限 {{gongs.未.daxian_range}}</div>
         </div>
         <!-- 申 福德 -->
-        <div class="palace" data-zhi="申">
-          <div class="p-head"><span class="p-dizhi">申</span><span class="p-gong">{{gongs.申.name}}</span><span class="p-ganzhi">{{gongs.申.ganzhi}}</span></div>
+        <div class="palace {{gongs.申.flag}}" data-zhi="申">
+          <div class="p-head"><span class="p-dizhi">申</span><span class="p-gong">{{gongs.申.name}}</span>{{gongs.申.shenBadge}}<span class="p-ganzhi">{{gongs.申.ganzhi}}</span></div>
           <div class="main-star">{{gongs.申.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.申.auxStars}}</div>
           <div class="small-star">{{gongs.申.smallStars}}</div>
           <div class="daxian">大限 {{gongs.申.daxian_range}}</div>
         </div>
         <!-- 辰 夫妻(身) -->
-        <div class="palace shen" data-zhi="辰">
-          <div class="p-head"><span class="p-dizhi">辰</span><span class="p-gong">{{gongs.辰.name}}</span><span class="p-ganzhi">{{gongs.辰.ganzhi}}</span></div>
+        <div class="palace {{gongs.辰.flag}}" data-zhi="辰">
+          <div class="p-head"><span class="p-dizhi">辰</span><span class="p-gong">{{gongs.辰.name}}</span>{{gongs.辰.shenBadge}}<span class="p-ganzhi">{{gongs.辰.ganzhi}}</span></div>
           <div class="main-star">{{gongs.辰.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.辰.auxStars}}</div>
           <div class="small-star">{{gongs.辰.smallStars}}</div>
@@ -720,56 +718,56 @@
           </div>
         </div>
         <!-- 酉 田宅 -->
-        <div class="palace" data-zhi="酉">
-          <div class="p-head"><span class="p-dizhi">酉</span><span class="p-gong">{{gongs.酉.name}}</span><span class="p-ganzhi">{{gongs.酉.ganzhi}}</span></div>
+        <div class="palace {{gongs.酉.flag}}" data-zhi="酉">
+          <div class="p-head"><span class="p-dizhi">酉</span><span class="p-gong">{{gongs.酉.name}}</span>{{gongs.酉.shenBadge}}<span class="p-ganzhi">{{gongs.酉.ganzhi}}</span></div>
           <div class="main-star">{{gongs.酉.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.酉.auxStars}}</div>
           <div class="small-star">{{gongs.酉.smallStars}}</div>
           <div class="daxian">大限 {{gongs.酉.daxian_range}}</div>
         </div>
         <!-- 卯 子女(来因) -->
-        <div class="palace laiyin" data-zhi="卯">
-          <div class="p-head"><span class="p-dizhi">卯</span><span class="p-gong">{{gongs.卯.name}}</span><span class="p-ganzhi">{{gongs.卯.ganzhi}}</span></div>
+        <div class="palace {{gongs.卯.flag}}" data-zhi="卯">
+          <div class="p-head"><span class="p-dizhi">卯</span><span class="p-gong">{{gongs.卯.name}}</span>{{gongs.卯.shenBadge}}<span class="p-ganzhi">{{gongs.卯.ganzhi}}</span></div>
           <div class="main-star">{{gongs.卯.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.卯.auxStars}}</div>
           <div class="small-star">{{gongs.卯.smallStars}}</div>
           <div class="daxian">大限 {{gongs.卯.daxian_range}}</div>
         </div>
         <!-- 戌 官禄 -->
-        <div class="palace" data-zhi="戌">
-          <div class="p-head"><span class="p-dizhi">戌</span><span class="p-gong">{{gongs.戌.name}}</span><span class="p-ganzhi">{{gongs.戌.ganzhi}}</span></div>
+        <div class="palace {{gongs.戌.flag}}" data-zhi="戌">
+          <div class="p-head"><span class="p-dizhi">戌</span><span class="p-gong">{{gongs.戌.name}}</span>{{gongs.戌.shenBadge}}<span class="p-ganzhi">{{gongs.戌.ganzhi}}</span></div>
           <div class="main-star">{{gongs.戌.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.戌.auxStars}}</div>
           <div class="small-star">{{gongs.戌.smallStars}}</div>
           <div class="daxian">大限 {{gongs.戌.daxian_range}}</div>
         </div>
         <!-- 寅 财帛 -->
-        <div class="palace" data-zhi="寅">
-          <div class="p-head"><span class="p-dizhi">寅</span><span class="p-gong">{{gongs.寅.name}}</span><span class="p-ganzhi">{{gongs.寅.ganzhi}}</span></div>
+        <div class="palace {{gongs.寅.flag}}" data-zhi="寅">
+          <div class="p-head"><span class="p-dizhi">寅</span><span class="p-gong">{{gongs.寅.name}}</span>{{gongs.寅.shenBadge}}<span class="p-ganzhi">{{gongs.寅.ganzhi}}</span></div>
           <div class="main-star">{{gongs.寅.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.寅.auxStars}}</div>
           <div class="small-star">{{gongs.寅.smallStars}}</div>
           <div class="daxian">大限 {{gongs.寅.daxian_range}}</div>
         </div>
         <!-- 丑 疾厄 -->
-        <div class="palace" data-zhi="丑">
-          <div class="p-head"><span class="p-dizhi">丑</span><span class="p-gong">{{gongs.丑.name}}</span><span class="p-ganzhi">{{gongs.丑.ganzhi}}</span></div>
+        <div class="palace {{gongs.丑.flag}}" data-zhi="丑">
+          <div class="p-head"><span class="p-dizhi">丑</span><span class="p-gong">{{gongs.丑.name}}</span>{{gongs.丑.shenBadge}}<span class="p-ganzhi">{{gongs.丑.ganzhi}}</span></div>
           <div class="main-star">{{gongs.丑.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.丑.auxStars}}</div>
           <div class="small-star">{{gongs.丑.smallStars}}</div>
           <div class="daxian">大限 {{gongs.丑.daxian_range}}</div>
         </div>
         <!-- 子 迁移 -->
-        <div class="palace" data-zhi="子">
-          <div class="p-head"><span class="p-dizhi">子</span><span class="p-gong">{{gongs.子.name}}</span><span class="p-ganzhi">{{gongs.子.ganzhi}}</span></div>
+        <div class="palace {{gongs.子.flag}}" data-zhi="子">
+          <div class="p-head"><span class="p-dizhi">子</span><span class="p-gong">{{gongs.子.name}}</span>{{gongs.子.shenBadge}}<span class="p-ganzhi">{{gongs.子.ganzhi}}</span></div>
           <div class="main-star">{{gongs.子.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.子.auxStars}}</div>
           <div class="small-star">{{gongs.子.smallStars}}</div>
           <div class="daxian">大限 {{gongs.子.daxian_range}}</div>
         </div>
         <!-- 亥 交友 -->
-        <div class="palace" data-zhi="亥">
-          <div class="p-head"><span class="p-dizhi">亥</span><span class="p-gong">{{gongs.亥.name}}</span><span class="p-ganzhi">{{gongs.亥.ganzhi}}</span></div>
+        <div class="palace {{gongs.亥.flag}}" data-zhi="亥">
+          <div class="p-head"><span class="p-dizhi">亥</span><span class="p-gong">{{gongs.亥.name}}</span>{{gongs.亥.shenBadge}}<span class="p-ganzhi">{{gongs.亥.ganzhi}}</span></div>
           <div class="main-star">{{gongs.亥.mainStarsHtml}}</div>
           <div class="aux-star">{{gongs.亥.auxStars}}</div>
           <div class="small-star">{{gongs.亥.smallStars}}</div>
