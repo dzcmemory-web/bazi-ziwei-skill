@@ -100,10 +100,21 @@ function chartToFlat(chart: any, currentYear?: number): Record<string, any> {
           return s;
         }).join('·')
       : '<span style="color:var(--ink-faint)">无主星</span>';
+    // 辅星同样要处理四化（右弼化科 / 文昌化忌 / 文曲化科 等常落辅星）
+    const auxStarsHtml = (g.auxStars && g.auxStars.length > 0)
+      ? g.auxStars.map((s: string) => {
+          const sh = (g.sihua || []).find((x: any) => x.star === s);
+          if (sh) {
+            const huaChar = sihuaCharMap[sh.hua] || sh.hua.slice(-1);
+            return `<span class="sihua-${huaChar}">${s}<span class="sihua-tag">${huaChar}</span></span>`;
+          }
+          return s;
+        }).join('·')
+      : '—';
     out[`gongs.${g.dizhi}.name`] = g.gong.endsWith('宫') ? g.gong : g.gong + '宫';
     out[`gongs.${g.dizhi}.ganzhi`] = g.tiangan + g.dizhi;
     out[`gongs.${g.dizhi}.mainStarsHtml`] = mainStarsHtml;
-    out[`gongs.${g.dizhi}.auxStars`] = g.auxStars && g.auxStars.length ? g.auxStars.join('·') : '—';
+    out[`gongs.${g.dizhi}.auxStars`] = auxStarsHtml;
     out[`gongs.${g.dizhi}.smallStars`] = '';
     out[`gongs.${g.dizhi}.daxian_range`] = g.daXian ? `${g.daXian.startAge}-${g.daXian.endAge}` : '-';
     // 命宫红框 / 身宫徽标 / 当前大限高亮 — 数据驱动, 不硬编码到模板
