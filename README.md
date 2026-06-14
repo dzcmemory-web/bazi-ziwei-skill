@@ -9,6 +9,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 [![SKILL.md](https://img.shields.io/badge/SKILL.md-compatible-c1432f.svg)](#-安装)
 
+简体中文 | [English](./README.en.md)
+
+<br>
+
+<img src="./docs/jietu.png" alt="综合印证海报示例" width="680">
+
+<sub>综合印证海报示例（合成命主，仅供展示）</sub>
+
 </div>
 
 ---
