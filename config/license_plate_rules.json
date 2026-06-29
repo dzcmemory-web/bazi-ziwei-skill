@@ -1,0 +1,145 @@
+{
+  "version": "0.1.0",
+  "score_weights": {
+    "bazi_match": 40,
+    "digit_luck": 25,
+    "letter_match": 15,
+    "aesthetic_memory": 10,
+    "homophone_safety": 10
+  },
+  "digit_five_elements": {
+    "0": "水",
+    "1": "水",
+    "2": "土",
+    "3": "木",
+    "4": "木",
+    "5": "土",
+    "6": "金",
+    "7": "金",
+    "8": "土",
+    "9": "火"
+  },
+  "letter_five_elements": {
+    "A": "木",
+    "B": "木",
+    "C": "火",
+    "D": "火",
+    "E": "土",
+    "F": "土",
+    "G": "金",
+    "H": "金",
+    "J": "水",
+    "K": "水",
+    "L": "木",
+    "M": "木",
+    "N": "火",
+    "P": "火",
+    "Q": "土",
+    "R": "土",
+    "S": "金",
+    "T": "金",
+    "U": "水",
+    "V": "水",
+    "W": "木",
+    "X": "火",
+    "Y": "土",
+    "Z": "金"
+  },
+  "element_match_points": {
+    "favorable": 1.0,
+    "missing": 0.8,
+    "neutral": 0.25,
+    "unfavorable": -0.8
+  },
+  "digit_luck": {
+    "base": 10,
+    "digit_scores": {
+      "0": 0.8,
+      "1": 0.5,
+      "2": 0.3,
+      "3": 0.4,
+      "4": -1.2,
+      "5": 0.2,
+      "6": 1.2,
+      "7": 0.1,
+      "8": 1.5,
+      "9": 0.9
+    },
+    "max_digit_score_bonus": 8,
+    "patterns": {
+      "double": 1.5,
+      "triple": 3.5,
+      "four_or_more": 5,
+      "ascending_sequence": 2,
+      "descending_sequence": 1,
+      "palindrome": 2.5,
+      "contains_168": 3,
+      "contains_668": 2.5,
+      "contains_888": 4,
+      "contains_520": 1.5
+    }
+  },
+  "aesthetic_memory": {
+    "base": 4,
+    "repeated_char": 1.5,
+    "repeated_pair": 1.5,
+    "alternating_letter_digit": 1,
+    "has_letter_and_digit": 1,
+    "palindrome": 1.5,
+    "province_prefix_match": 1,
+    "province_prefix_mismatch": -2
+  },
+  "bad_homophones": {
+    "4": {
+      "penalty": 1,
+      "reason": "含数字 4，部分用户会介意其谐音"
+    },
+    "14": {
+      "penalty": 2,
+      "reason": "14 常被视作不讨喜谐音"
+    },
+    "24": {
+      "penalty": 2,
+      "reason": "24 在部分语境里容易被解读为避讳组合"
+    },
+    "250": {
+      "penalty": 4,
+      "reason": "250 是常见负面口头谐音"
+    },
+    "514": {
+      "penalty": 3,
+      "reason": "514 容易被解读成不吉利谐音"
+    },
+    "748": {
+      "penalty": 4,
+      "reason": "748 是明显负面谐音"
+    },
+    "594": {
+      "penalty": 3,
+      "reason": "594 容易被解读成不吉利谐音"
+    }
+  },
+  "recommendation_levels": [
+    {
+      "min_score": 85,
+      "level": "强推荐"
+    },
+    {
+      "min_score": 70,
+      "level": "可选"
+    },
+    {
+      "min_score": 55,
+      "level": "一般"
+    },
+    {
+      "min_score": 0,
+      "level": "不建议"
+    }
+  ],
+  "explain_templates": {
+    "disclaimer": "结果仅作传统文化和娱乐参考，不具备科学预测效力，也不作为购车、上牌或其他实际决策依据。",
+    "unknown_time_note": "出生时间未知，本次只按出生日期和季节五行做简化参考，可信度会低于完整八字排盘。",
+    "local_calculator_note": "已优先尝试调用本仓库 calculator 排盘；若本地依赖不可用，会退回到可解释的简化五行参考。"
+  }
+}

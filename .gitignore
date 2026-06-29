@@ -1,6 +1,7 @@
 # dependencies
 node_modules/
 calculator/node_modules/
+*.egg-info/
 
 # build / runtime artifacts
 *.log

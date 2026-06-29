@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "license-plate-bazi"
+version = "0.1.0"
+description = "Traditional-culture BaZi based license plate recommendation prototype"
+requires-python = ">=3.9"
+readme = "docs/license-plate-bazi.md"
+license = { text = "MIT" }
+authors = [{ name = "dzcmemory-web contributors" }]
+
+[project.scripts]
+license-plate-bazi = "license_plate_bazi.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

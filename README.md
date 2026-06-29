@@ -91,6 +91,51 @@ Agent 会：
 
 详细流程见 [`SKILL.md`](./SKILL.md)，测试方法见 [`TEST-GUIDE.md`](./TEST-GUIDE.md)。
 
+### 八字 + 车牌选号原型
+
+本原型分支新增了一个车牌推荐 CLI，规则集中在 [`config/license_plate_rules.json`](./config/license_plate_rules.json)，说明见 [`docs/license-plate-bazi.md`](./docs/license-plate-bazi.md)。
+
+首次使用建议先安装排盘依赖：
+
+```bash
+cd calculator
+npm install
+cd ..
+```
+
+然后从仓库根目录运行：
+
+```bash
+python3 scripts/license_plate_recommend.py \
+  --birth-date 1990-05-12 \
+  --birth-time 08:30 \
+  --gender female \
+  --plates 粤B8A68Z 粤B52088 粤B3M96Q
+```
+
+也可以从仓库根目录用模块方式运行：
+
+```bash
+python3 -m license_plate_bazi.cli \
+  --birth-date 1990-05-12 \
+  --birth-time 08:30 \
+  --gender female \
+  --plates 粤B8A68Z 粤B52088 粤B3M96Q
+```
+
+如果要在任意目录使用 `license-plate-bazi` 命令，请先在虚拟环境里安装本地包：
+
+```bash
+python3 -m pip install -e .
+license-plate-bazi \
+  --birth-date 1990-05-12 \
+  --birth-time 08:30 \
+  --gender female \
+  --plates 粤B8A68Z 粤B52088 粤B3M96Q
+```
+
+若未安装 `calculator` 依赖，CLI 会降级为低置信度简化参考，并提示先运行 `cd calculator && npm install`。本功能仅作传统文化和娱乐参考，不作为实际上牌或购车决策依据。
+
 ### 命令行直接排盘（不经 Agent）
 
 ```bash
